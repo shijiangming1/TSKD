@@ -57,6 +57,6 @@ python test.py --dataset sysu --mode all --gpu 0 --resume 'model_path'
 
 #### 4. Reference
 
-[1]  
+[1]  Ancong  Wu,  Wei-Shi  Zheng,  Hong-Xing  Yu,  ShaogangGong, and Jianhuang Lai.  Rgb-infrared cross-modality per-son re-identification. InICCV, 2017.
 
-[2] 
+[2] Dat  Tien  Nguyen,  Hyung  Gil  Hong,  Ki  Wan  Kim,  and Kang Ryoung Park.  Person recognition system based on a combination of body images from visible light and thermal cameras. Sensors, page 605, 2017.
