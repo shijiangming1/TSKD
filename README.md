@@ -6,10 +6,8 @@ Pytorch Code of  TSKD for Cross-modality  Person Re-Identification (ReID)
 
 ---
 
-We propose a Self-Mimic Mutual-Distillation (SM$^2$D) learning strategy for cross-modality person ReID. Our method used two-stage feature alignment, where the separated optimizations realize both inter/intra feature alignment.
+We propose a TSKDy for cross-modality person ReID. Our method used two-stage feature alignment, where the separated optimizations realize both inter/intra feature alignment.
 
-- Self-Mimic Learning (SM) : It uses self-distillation to build the ID prototype for each person and forces samples to their corresponding prototypes in each modality.
-- Mutual-Distillation Learning (MD) : It employs mutual distillation to optimize the margin between the cross-modality feature distributions.
 
 #### Results on two standard benchmarks 
 
