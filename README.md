@@ -1,12 +1,12 @@
 ## TSKD
 
-Pytorch Code of  TSKD for Cross-modality  Person Re-Identification (ReID)
+Pytorch Code of TSKD for Cross-modality Person Re-Identification (ReID)
 
 ### Highlight
 
 ---
 
-We propose a TSKDy for cross-modality person ReID. Our method used two-stage feature alignment, where the separated optimizations realize both inter/intra feature alignment.
+We propose a TSKD for cross-modality person ReID. Our method used two-stage feature alignment, where the separated optimizations realize both inter/intra feature alignment.
 
 
 #### Results on two standard benchmarks 
