@@ -31,7 +31,7 @@ We propose a TSKD for cross-modality person ReID. Our method used two-stage feat
 Train a model by
 
 ```python
-python run.py --dataset sysu --lr 0.1 batch-size 8 --sm_w 1 --md_w 0.05 --gpu 0  
+python main.py --dataset sysu --lr 0.1 batch-size 8 --sm_w 1 --md_w 0.05 --gpu 0  
 ```
 
 - ``--dataset``: which dataset "sysu" or "regdb".
@@ -55,8 +55,4 @@ python test.py --dataset sysu --mode all --gpu 0 --resume 'model_path'
 - ``--resume``: the saved model path. 
 - ``--gpu``: which gpu to run.
 
-#### 4. Reference
 
-[1]  Ancong  Wu,  Wei-Shi  Zheng,  Hong-Xing  Yu,  ShaogangGong, and Jianhuang Lai.  Rgb-infrared cross-modality per-son re-identification. InICCV, 2017.
-
-[2] Dat  Tien  Nguyen,  Hyung  Gil  Hong,  Ki  Wan  Kim,  and Kang Ryoung Park.  Person recognition system based on a combination of body images from visible light and thermal cameras. Sensors, page 605, 2017.
