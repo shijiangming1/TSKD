@@ -1,66 +1,62 @@
+## TSKD
 
-PyTorch implementation for [Learning with Twin Noisy Labels for Visible-Infrared Person Re-Identification](https://openaccess.thecvf.com/content/CVPR2022/papers/Yang_Learning_With_Twin_Noisy_Labels_for_Visible-Infrared_Person_Re-Identification_CVPR_2022_paper.pdf) (CVPR 2022).
+Pytorch Code of TSKD for Cross-modality Person Re-Identification (ReID)
+
+### Highlight
+
+---
+
+We propose a TSKD for cross-modality person ReID. Our method used two-stage feature alignment, where the separated optimizations realize both inter/intra feature alignment.
 
 
-## Introduction
+#### Results on two standard benchmarks 
 
-### DART framework
-<img src="https://github.com/XLearning-SCU/2022-CVPR-DART/blob/main/figs/framework.png"  width="760" height="268" />
+| Dataset       | mode            | Rank@1  | mAP     |
+| ------------- | --------------- | ------- | ------- |
+| SYSU-MM01 [1] | All-Search      | ~ 76.6% | ~ 73.0% |
+| SYSU-MM01     | Indoor-Search   | ~ 82.7% | ~ 85.3% |
+| RegDB [2]     | Visible-Thermal | ~ 91.1% | ~ 81.7% |
+| RegDB         | Thermal-Visible | ~ 89.9% | ~ 80.5% |
 
-## Requirements
+*The code has been tested in Python 3.7, Pytorch = 1.1.0. Both of these two datasets may have some fluctuation due to random spliting.
 
-- Python 3.7
-- PyTorch ~1.7.1
-- numpy
-- scikit-learn
-## Datasets
+#### 1. Datasets
 
-### SYSU-MM01 and RegDB
-We follow [ADP](https://github.com/mangye16/Cross-Modal-Re-ID-baseline/tree/master/ICCV21_CAJ) to obtain datasets.
+- (1) SYSU-MM01 Dataset [1] : The SYSU-MM01 dataset is a large-scale and challenging RGB-IR cross-modality Re-ID dataset. It is collected from six camera views (four RGB and two near-infrared), including both indoor and outdoor environments. Overall, this dataset contains 287,628 RGB images and 15,792 IR images with 491 identities in total. 
+  - run ``python pre_process_sysu.py``  after download the dataset, the trainning data will be stored in ".npy" format.
+- (2) RegDB Dataset [2] : The RegDB dataset contains 412 identities, where each identity has 10 RGB images and 10 IR images. This dataset is randomly divided, with half for training and the remainings for testing.
 
-## Training and Evaluation
+#### 2. Training
 
-### Training
+Train a model by
 
-Modify the ```data_path``` and  specify the ```noise_ratio``` to train the model.
-
-```train
-# SYSU-MM01: noise_ratio = {0, 0.2, 0.5}
-python run.py --gpu 0 --dataset sysu --data-path data_path --noise-rate 0.2 --savename sysu_dart_nr20 
-
-# RegDB: noise_ratio = {0, 0.2, 0.5}, trial = 1-10
-python run.py --gpu 0 --dataset regdb --data-path data_path --noise-rate 0.2 --savename regdb_dart_nr20 --trial 1
-```
-### Evaluation
-
-Modify the  ```data_path``` and ```model_path``` to evaluate the trained model. 
-
-```
-# SYSU-MM01: mode = {all, indoor}
-python test.py --gpu 0 --dataset sysu --data-path data-path --model_path model_path --resume-net1 'sysu_dart_nr20_net1.t' resume-net2 'sysu_dart_nr20_net2.t' --mode all
-
-# RegDB: --tvsearch or not (whether thermal to visible search)
-python test.py --gpu 0 --dataset regdb --data-path data-path --model_path model_path --resume-net1 'regdb_dart_nr20_trial{}_net1.t' resume-net2 'regdb_dart_nr20_trial{}_net2.t'
+```python
+python run.py --dataset sysu --lr 0.1 batch-size 8 --sm_w 1 --md_w 0.05 --gpu 0  
 ```
 
+- ``--dataset``: which dataset "sysu" or "regdb".
+- ``--lr``: initial learning rate.
+- ``--sm_w``: the weight of the self-mimic loss.
+- ``--md_w``: the weight of the mutual distillation loss
+- ``--gpu``: which gpu to run.
 
-## Citation
+You may need manually define the data path first.
 
-If DART is useful for your research, please cite the following paper:
+#### 3. Testing.
+
+Test a model on SYSU-MM01 or RegDB dataset by
+
+```python
+python test.py --dataset sysu --mode all --gpu 0 --resume 'model_path'
 ```
-@InProceedings{Yang_2022_CVPR,
-    author={Yang, Mouxing and Huang, Zhenyu and Hu, Peng and Li, Taihao and Lv, Jiancheng and Peng, Xi},
-    title={Learning With Twin Noisy Labels for Visible-Infrared Person Re-Identification},
-    booktitle={Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)},
-    month={June},
-    year={2022},
-    pages={14308-14317}
-}
-```
 
-## License
+- ``--dataset``: which dataset "sysu" or "regdb".
+- ``--mode``: "all" or "indoor" all search or indoor search (only for sysu dataset)
+- ``--resume``: the saved model path. 
+- ``--gpu``: which gpu to run.
 
-[Apache License 2.0](http://www.apache.org/licenses/LICENSE-2.0)
+#### 4. Reference
 
-## Acknowledgements
-The code is based on [ADP](https://github.com/mangye16/Cross-Modal-Re-ID-baseline/tree/master/ICCV21_CAJ) licensed under Apache 2.0.
+[1]  Ancong  Wu,  Wei-Shi  Zheng,  Hong-Xing  Yu,  ShaogangGong, and Jianhuang Lai.  Rgb-infrared cross-modality per-son re-identification. InICCV, 2017.
+
+[2] Dat  Tien  Nguyen,  Hyung  Gil  Hong,  Ki  Wan  Kim,  and Kang Ryoung Park.  Person recognition system based on a combination of body images from visible light and thermal cameras. Sensors, page 605, 2017.
